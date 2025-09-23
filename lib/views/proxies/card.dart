@@ -154,6 +154,14 @@ class ProxyCard extends StatelessWidget {
                 if (type == ProxyCardType.expand) ...[
                   SizedBox(
                     height: measure.bodySmallHeight,
+                    child: _ProxyDesc1(
+                      proxy: proxy,
+                    ),
+                  ),
+                  Container(
+                    constraints: BoxConstraints(
+                      maxHeight: measure.bodySmallHeight * 2,
+                    ),
                     child: _ProxyDesc(
                       proxy: proxy,
                     ),
@@ -218,6 +226,28 @@ class _ProxyDesc extends ConsumerWidget {
     );
     return EmojiText(
       desc,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+      style: context.textTheme.bodySmall?.copyWith(
+        color: context.textTheme.bodySmall?.color?.opacity80,
+      ),
+    );
+  }
+}
+
+
+class _ProxyDesc1 extends ConsumerWidget {
+  final Proxy proxy;
+
+  const _ProxyDesc1({
+    required this.proxy,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    String selectedproxyname1 = ref.watch(getSelectedProxyNameProvider(proxy.name)).getSafeValue('') ?? '';
+    return EmojiText(
+      selectedproxyname1,
       overflow: TextOverflow.ellipsis,
       style: context.textTheme.bodySmall?.copyWith(
         color: context.textTheme.bodySmall?.color?.opacity80,
