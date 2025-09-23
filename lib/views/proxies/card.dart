@@ -149,7 +149,20 @@ class ProxyCard extends StatelessWidget {
                 if (type == ProxyCardType.expand) ...[
                   SizedBox(
                     height: measure.bodySmallHeight,
-                    child: _ProxyDesc(proxy: proxy),
+                    child: _ProxyDesc1(
+                      proxy: proxy,
+                    ),
+                  ),
+                  Container(
+                    constraints: BoxConstraints(
+                      maxHeight: measure.bodySmallHeight * 2,
+                    ),
+                    child: _ProxyDesc(
+                      proxy: proxy,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 6,
                   ),
                   const SizedBox(height: 6),
                   delayText,
@@ -205,6 +218,28 @@ class _ProxyDesc extends ConsumerWidget {
     final desc = ref.watch(proxyDescProvider(proxy));
     return EmojiText(
       desc,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+      style: context.textTheme.bodySmall?.copyWith(
+        color: context.textTheme.bodySmall?.color?.opacity80,
+      ),
+    );
+  }
+}
+
+
+class _ProxyDesc1 extends ConsumerWidget {
+  final Proxy proxy;
+
+  const _ProxyDesc1({
+    required this.proxy,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    String selectedproxyname1 = ref.watch(selectedProxyNameProvider(proxy.name)).takeFirstValid([]);
+    return EmojiText(
+      selectedproxyname1,
       overflow: TextOverflow.ellipsis,
       style: context.textTheme.bodySmall?.copyWith(
         color: context.textTheme.bodySmall?.color?.opacity80,
